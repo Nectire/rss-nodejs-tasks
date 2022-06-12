@@ -13,4 +13,4 @@ export const getArchitecture = () => os.arch();
 
 export const getHomeDir = () => os.homedir();
 
-export const getEOL = () => os.EOL;
+export const getEOL = () =>'EOL: ' + JSON.stringify(os.EOL);
