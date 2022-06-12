@@ -1,4 +1,10 @@
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-const __filename = fileURLToPath(import.meta.url);
-export const __dirname = dirname(__filename);
+import { join } from "path";
+import {homedir} from 'os';
+
+let __dirname = '';
+
+export const setDir = (path) => {
+  __dirname =  path ? join(path) : homedir();
+}
+
+export const getDir = () => __dirname;
