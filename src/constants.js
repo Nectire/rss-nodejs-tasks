@@ -14,3 +14,11 @@ export const COMMANDS = [
   "compress",
   "decompress",
 ];
+
+export const ARGS = {
+  userName: '--username',
+  arch: '--architecture',
+  EOL: '--EOL',
+  cpus: '--cpus',
+  homeDir: '--homedir'
+}
