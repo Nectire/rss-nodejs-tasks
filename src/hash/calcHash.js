@@ -10,7 +10,7 @@ export const calculateHash = (path) => {
     if (!path) throw new InvalidInputError();
     const input = join(getDir(), path);
 
-    if (!existsSync(input)) throw new InvalidInputError();
+    if (!existsSync(input)) throw new OperationError();
 
     const hash = createHash("sha256");
     const readStream = createReadStream(input);

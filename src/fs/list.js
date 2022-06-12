@@ -3,14 +3,14 @@ import { existsSync } from "fs";
 import { readdir } from "fs/promises";
 
 import { join } from "path";
-import { InvalidInputError, OperationError } from '../errors.js';
+import { OperationError } from '../errors.js';
 
 export const list = async () => {
   
   try {
     const pathTofiles = join(getDir());
 
-    if (!existsSync(pathTofiles)) throw new InvalidInputError();
+    if (!existsSync(pathTofiles)) throw new OperationError();
 
     const files = await readdir(pathTofiles)
       .catch(err =>{ throw new OperationError()});

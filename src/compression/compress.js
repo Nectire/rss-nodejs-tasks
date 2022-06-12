@@ -15,7 +15,7 @@ export const compress = async (pathToFile, dest) => {
     const input = join(getDir(), pathToFile);
     const output = join(getDir(), dest);
 
-    if (!existsSync(input)) throw new InvalidInputError();
+    if (!existsSync(input)) throw new OperationError();
 
     await pipe(
       createReadStream(input),

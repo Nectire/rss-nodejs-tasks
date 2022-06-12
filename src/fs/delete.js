@@ -13,7 +13,7 @@ export const remove = async (pathToFile) => {
 
     const input = join(getDir(), pathToFile);
 
-    if (!existsSync(input)) throw new InvalidInputError();
+    if (!existsSync(input)) throw new OperationError();
     
     const stream = createReadStream(input);
 
