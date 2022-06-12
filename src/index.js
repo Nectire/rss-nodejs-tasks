@@ -1,12 +1,9 @@
-import {Writable} from 'stream';
 import { createInterface,  } from 'readline';
-import { createReadStream } from 'fs';
-import { parse, sep } from 'path';
 
 import { setDir, getDir } from './directoryPaths.js';
 import { parseArg, parseCommand } from './utils.js';
 import { InvalidInputError, OperationError } from './errors.js';
-import { COMMANDS, ARGS } from './constants.js';
+import { ARGS } from './constants.js';
 import { create } from "./fs/create.js";
 import { list } from "./fs/list.js";
 import { read } from "./fs/read.js";
@@ -113,11 +110,6 @@ const init = () => {
       const parsedLine = data.split(" ");
       await decompress(parsedLine[1], parsedLine[2]);
     }
-
-    // if(command === 'up') {
-    //   process.chdir('../');
-    //   process.stdout.write(path);
-    // }
 
     process.stdout.write(`\nYou are currently in ${getDir()}\n`);
   });
