@@ -9,6 +9,8 @@ import { COMMANDS, ARGS } from './constants.js';
 import { create } from "./fs/create.js";
 import { read } from "./fs/read.js";
 import { calculateHash } from './hash/calcHash.js';
+import { compress } from './compression/compress.js';
+import { decompress } from './compression/decompress.js';
 import {
   getArchitecture,
   getCpus,
@@ -39,7 +41,7 @@ const init = () => {
     closeReadlineStream(rl);
   });
   
-  rl.on('line', (data) => {
+  rl.on('line', async (data) => {
     const command = parseCommand(data);
 
     if (!command) {
@@ -85,6 +87,16 @@ const init = () => {
     if (command === 'hash') {
       const parsedLine = data.split(" ");
       calculateHash(parsedLine[1]);
+    }
+
+    if (command === 'compress') {
+      const parsedLine = data.split(" ");
+      await compress(parsedLine[1], parsedLine[2]);
+    }
+
+    if (command === "decompress") {
+      const parsedLine = data.split(" ");
+      await decompress(parsedLine[1], parsedLine[2]);
     }
 
 
