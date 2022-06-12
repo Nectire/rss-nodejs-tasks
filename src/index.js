@@ -3,10 +3,12 @@ import { createInterface,  } from 'readline';
 import { createReadStream } from 'fs';
 import { parse, sep } from 'path';
 
+import { setDir, getDir } from './directoryPaths.js';
 import { parseArg, parseCommand } from './utils.js';
 import { InvalidInputError, OperationError } from './errors.js';
 import { COMMANDS, ARGS } from './constants.js';
 import { create } from "./fs/create.js";
+import { list } from "./fs/list.js";
 import { read } from "./fs/read.js";
 import { calculateHash } from './hash/calcHash.js';
 import { compress } from './compression/compress.js';
@@ -23,10 +25,10 @@ import {
 
 const init = () => {
   const userName = parseArg(ARGS.userName)
-    .replace(`${ARGS.homeDir}=`, '');
+    .replace(`${ARGS.userName}=`, '');
 
-  
-  const path = `\nYou are currently in ${process.cwd()}\n`;
+  setDir();
+  const path = `\nYou are currently in ${getDir()}\n`;
 
   function closeReadlineStream(readline) {
     process.stdout.write(`Thank you for using File Manager, ${userName}!\n`);
@@ -36,6 +38,7 @@ const init = () => {
   const rl = createInterface(process.stdin, process.stdout);
 
   process.stdout.write(`Welcome to the File Manager, ${userName}!\n`);
+  process.stdout.write(path);
 
   rl.on('SIGINT', () => {
     closeReadlineStream(rl);
@@ -50,6 +53,10 @@ const init = () => {
 
     if (command === '.exit') {
       closeReadlineStream(rl);
+    }
+
+    if (command === 'ls') {
+      await list();
     }
 
     if (command === 'add') {
