@@ -1,27 +1,25 @@
 import { existsSync, createReadStream} from "fs";
 import { join } from "path";
-import { OperationError } from "../errors.js";
+import { InvalidInputError, OperationError } from "../errors.js";
 import { getDir } from "../directoryPaths.js";
-import { pipeline } from "stream";
 
-export const read = async (rl, path) => {
+export const read = async (path) => {
   
   try {
-    if (!path) throw new OperationError();
+    if (!path) throw new InvalidInputError();
 
     const readPath = join(getDir(), path);
     if (!existsSync(readPath)) {
       throw new OperationError();
     }
+    const rs = createReadStream(readPath);
+    rs.on('data', (data) => {
+      console.log(data);
+    });
 
-    pipeline(
-      createReadStream(readPath),
-        process.stdout,
-        (err) => {
-          if (err) throw OperationError();
-          process.stdout.write('\n');
-        }
-      );
+    rs.on('error', (err) => {
+      if (err) throw new OperationError();
+    })
 
     } catch (error) {
       console.error(error.message);

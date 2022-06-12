@@ -82,7 +82,7 @@ const init = () => {
 
     if (command === "cat") {
       const parsedLine = data.split(" ");
-      await read(rl, parsedLine[1]);
+      await read(parsedLine[1]);
     }
 
     if (command === 'rm') {
