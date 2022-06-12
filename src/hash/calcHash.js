@@ -3,12 +3,12 @@ import { createHash } from "crypto";
 import { join } from "path";
 
 import { InvalidInputError, OperationError } from "../errors.js";
-import { __dirname } from "../directoryPaths.js";
+import { getDir } from "../directoryPaths.js";
 
 export const calculateHash = (path) => {
   try {
     if (!path) throw new InvalidInputError();
-    const input = join(__dirname, path);
+    const input = join(getDir(), path);
 
     if (!existsSync(input)) throw new InvalidInputError();
 

@@ -5,15 +5,15 @@ import { createBrotliDecompress } from "zlib";
 import { join } from "path";
 
 import { InvalidInputError, OperationError } from "../errors.js";
-import { __dirname } from "../directoryPaths.js";
+import { getDir } from "../directoryPaths.js";
 
 export const decompress = async (pathToFile, dest) => {
   try {
     if (!pathToFile || !dest) throw new InvalidInputError();
 
     const pipe = promisify(pipeline);
-    const input = join(__dirname, pathToFile);
-    const output = join(__dirname, dest);
+    const input = join(getDir(), pathToFile);
+    const output = join(getDir(), dest);
 
     if (!existsSync(input)) throw new InvalidInputError();
 

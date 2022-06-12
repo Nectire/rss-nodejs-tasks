@@ -2,11 +2,11 @@ import { writeFile, existsSync, createWriteStream } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { OperationError } from "../errors.js";
-import { __dirname } from "../directoryPaths.js";
+import { getDir } from "../directoryPaths.js";
 
 export const create = async (rl, path, data) => {
   try {
-    const filePath = join(__dirname, path);
+    const filePath = join(getDir(), path);
 
     if (existsSync(filePath)) throw new OperationError();
 

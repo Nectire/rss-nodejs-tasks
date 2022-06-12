@@ -1,8 +1,7 @@
 import { existsSync, createReadStream} from "fs";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { join } from "path";
 import { OperationError } from "../errors.js";
-import { __dirname } from "../directoryPaths.js";
+import { getDir } from "../directoryPaths.js";
 import { pipeline } from "stream";
 
 export const read = async (rl, path) => {
@@ -10,7 +9,7 @@ export const read = async (rl, path) => {
   try {
     if (!path) throw new OperationError();
 
-    const readPath = join(__dirname, path);
+    const readPath = join(getDir(), path);
     if (!existsSync(readPath)) {
       throw new OperationError();
     }
