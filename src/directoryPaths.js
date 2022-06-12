@@ -1,7 +1,7 @@
-import { join } from "path";
+import { join} from "path";
 import {homedir} from 'os';
 
-let __dirname = '';
+let __dirname = homedir();
 
 export const setDir = (path) => {
   __dirname =  path ? join(homedir(), path) : homedir();

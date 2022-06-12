@@ -28,7 +28,6 @@ const init = () => {
     .replace(`${ARGS.userName}=`, '');
 
   setDir();
-  const path = `\nYou are currently in ${getDir()}\n`;
 
   function closeReadlineStream(readline) {
     process.stdout.write(`Thank you for using File Manager, ${userName}!\n`);
@@ -38,7 +37,7 @@ const init = () => {
   const rl = createInterface(process.stdin, process.stdout);
 
   process.stdout.write(`Welcome to the File Manager, ${userName}!\n`);
-  process.stdout.write(path);
+  process.stdout.write(`\nYou are currently in ${getDir()}\n`);
 
   rl.on('SIGINT', () => {
     closeReadlineStream(rl);
@@ -48,28 +47,37 @@ const init = () => {
     const command = parseCommand(data);
 
     if (!command) {
-      process.stderr.write(new InvalidInputError().message + '\n');
+      process.stderr.write(new InvalidInputError().message + "\n");
     }
 
-    if (command === '.exit') {
+    if (command === ".exit") {
       closeReadlineStream(rl);
     }
 
-    if (command === 'ls') {
+    if (command === "ls") {
       await list();
     }
 
-    if (command === 'add') {
-      const parsedLine = data.split(' ');
+    if(command === 'up') {
+      setDir('../');
+    }
+
+    if (command === "cd") {
+      const parsedLine = data.split(" ");
+      setDir(parsedLine[1]);
+    }
+
+    if (command === "add") {
+      const parsedLine = data.split(" ");
       create(rl, parsedLine[1]);
     }
 
-    if (command === 'cat') {
-      const parsedLine = data.split(' ');
+    if (command === "cat") {
+      const parsedLine = data.split(" ");
       read(rl, parsedLine[1]);
     }
 
-    if (command === 'os') {
+    if (command === "os") {
       if (data.includes(ARGS.cpus)) {
         process.stdout.write(`\n${getCpus()}\n`);
       }
@@ -91,12 +99,12 @@ const init = () => {
       }
     }
 
-    if (command === 'hash') {
+    if (command === "hash") {
       const parsedLine = data.split(" ");
       calculateHash(parsedLine[1]);
     }
 
-    if (command === 'compress') {
+    if (command === "compress") {
       const parsedLine = data.split(" ");
       await compress(parsedLine[1], parsedLine[2]);
     }
@@ -106,13 +114,12 @@ const init = () => {
       await decompress(parsedLine[1], parsedLine[2]);
     }
 
-
     // if(command === 'up') {
     //   process.chdir('../');
     //   process.stdout.write(path);
     // }
 
-    process.stdout.write(path);
+    process.stdout.write(`\nYou are currently in ${getDir()}\n`);
   });
 }
 

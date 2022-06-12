@@ -1,4 +1,4 @@
-import { __dirname, getDir } from '../directoryPaths.js';
+import { getDir } from '../directoryPaths.js';
 import { existsSync } from "fs";
 import { readdir } from "fs/promises";
 
