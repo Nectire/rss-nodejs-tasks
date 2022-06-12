@@ -2,7 +2,7 @@ import { createInterface,  } from 'readline';
 
 import { setDir, getDir } from './directoryPaths.js';
 import { parseArg, parseCommand } from './utils.js';
-import { InvalidInputError, OperationError } from './errors.js';
+import { InvalidInputError } from './errors.js';
 import { ARGS } from './constants.js';
 import { create } from "./fs/create.js";
 import { list } from "./fs/list.js";
@@ -20,6 +20,7 @@ import {
   getEOL,
 } from './systemInfo/systemInfo.js';
 import { copy } from './fs/copy.js';
+import { move } from './fs/move.js';
 
 
 
@@ -75,6 +76,11 @@ const init = () => {
     if (command === 'cp') {
       const parsedLine = data.split(" ");
       await copy(parsedLine[1], parsedLine[2]);
+    }
+
+    if (command === "mv") {
+      const parsedLine = data.split(" ");
+      await move(parsedLine[1], parsedLine[2]);
     }
 
     if (command === "cat") {
