@@ -46,7 +46,8 @@ const init = () => {
   
   rl.on('line', async (data) => {
     const command = parseCommand(data);
-
+    
+    // Сильно не плюйтесь, в последнюю ночь все пилил :)
     if (!command) {
       process.stderr.write(new InvalidInputError().message + "\n");
     }
