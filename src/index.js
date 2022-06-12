@@ -1,13 +1,14 @@
 import {Writable} from 'stream';
 import { createInterface,  } from 'readline';
-import { parseArg, parseCommand } from './utils.js';
-import { COMMANDS, ARGS } from './constants.js';
-import { InvalidInputError, OperationError } from './errors.js';
 import { createReadStream } from 'fs';
-import { create } from './fs/create.js';
-import { read } from './fs/read.js';
-import os from 'os';
 import { parse, sep } from 'path';
+
+import { parseArg, parseCommand } from './utils.js';
+import { InvalidInputError, OperationError } from './errors.js';
+import { COMMANDS, ARGS } from './constants.js';
+import { create } from "./fs/create.js";
+import { read } from "./fs/read.js";
+import { calculateHash } from './hash/calcHash.js';
 import {
   getArchitecture,
   getCpus,
@@ -79,6 +80,11 @@ const init = () => {
       if (data.includes(ARGS.EOL)) {
         process.stdout.write(`\n${getEOL()}\n`);
       }
+    }
+
+    if (command === 'hash') {
+      const parsedLine = data.split(" ");
+      calculateHash(parsedLine[1]);
     }
 
 
