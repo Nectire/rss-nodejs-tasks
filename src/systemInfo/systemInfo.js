@@ -3,7 +3,11 @@ import os from 'os';
 
 export const getCpus = () => {
   return os.cpus().map((cpu) => {
-    return `Model: ${cpu.model}\nspeed: ${cpu.speed.toString().slice(0, 1)} GHz`;
+    return `Model: ${cpu.model}\nspeed: ${
+      cpu.speed < 1000
+        ? (cpu.speed / 10).toFixed(2) + " GHz"
+        : (cpu.speed / 1000).toFixed(2) + " GHz"
+    }`;
     }).join('\n') + `\ntotal cores (threads): ${os.cpus().length}`;
 }
 
