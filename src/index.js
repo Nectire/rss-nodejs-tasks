@@ -6,6 +6,7 @@ import { InvalidInputError, OperationError } from './errors.js';
 import { ARGS } from './constants.js';
 import { create } from "./fs/create.js";
 import { list } from "./fs/list.js";
+import { remove } from "./fs/delete.js";
 import { read } from "./fs/read.js";
 import { calculateHash } from './hash/calcHash.js';
 import { compress } from './compression/compress.js';
@@ -72,6 +73,11 @@ const init = () => {
     if (command === "cat") {
       const parsedLine = data.split(" ");
       read(rl, parsedLine[1]);
+    }
+
+    if (command === 'rm') {
+      const parsedLine = data.split(" ");
+      await remove(parsedLine[1]);
     }
 
     if (command === "os") {
