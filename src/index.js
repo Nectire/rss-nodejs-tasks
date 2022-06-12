@@ -19,6 +19,7 @@ import {
   getHomeDir,
   getEOL,
 } from './systemInfo/systemInfo.js';
+import { copy } from './fs/copy.js';
 
 
 
@@ -69,6 +70,11 @@ const init = () => {
     if (command === "add") {
       const parsedLine = data.split(" ");
       await create(rl, parsedLine[1]);
+    }
+
+    if (command === 'cp') {
+      const parsedLine = data.split(" ");
+      await copy(parsedLine[1], parsedLine[2]);
     }
 
     if (command === "cat") {
