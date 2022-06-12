@@ -6,6 +6,7 @@ import { InvalidInputError, OperationError } from './errors.js';
 import { ARGS } from './constants.js';
 import { create } from "./fs/create.js";
 import { list } from "./fs/list.js";
+import { rename } from "./fs/rename.js";
 import { remove } from "./fs/delete.js";
 import { read } from "./fs/read.js";
 import { calculateHash } from './hash/calcHash.js';
@@ -67,17 +68,22 @@ const init = () => {
 
     if (command === "add") {
       const parsedLine = data.split(" ");
-      create(rl, parsedLine[1]);
+      await create(rl, parsedLine[1]);
     }
 
     if (command === "cat") {
       const parsedLine = data.split(" ");
-      read(rl, parsedLine[1]);
+      await read(rl, parsedLine[1]);
     }
 
     if (command === 'rm') {
       const parsedLine = data.split(" ");
       await remove(parsedLine[1]);
+    }
+
+    if (command == 'rn') {
+      const parsedLine = data.split(" ");
+      await rename(parsedLine[1], parsedLine[2]);
     }
 
     if (command === "os") {
