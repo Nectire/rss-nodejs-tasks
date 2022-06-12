@@ -46,7 +46,7 @@ const init = () => {
   
   rl.on('line', async (data) => {
     const command = parseCommand(data);
-    
+
     // Сильно не плюйтесь, в последнюю ночь все пилил :)
     if (!command) {
       process.stderr.write(new InvalidInputError().message + "\n");
@@ -71,7 +71,7 @@ const init = () => {
 
     if (command === "add") {
       const parsedLine = data.split(" ");
-      await create(rl, parsedLine[1]);
+      await create(parsedLine[1]);
     }
 
     if (command === 'cp') {

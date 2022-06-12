@@ -1,18 +1,23 @@
 import { writeFile, existsSync, createWriteStream } from "fs";
-import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { OperationError } from "../errors.js";
+import { InvalidInputError, OperationError } from "../errors.js";
 import { getDir } from "../directoryPaths.js";
 
-export const create = async (rl, path, data) => {
+export const create = async (path) => {
   try {
+    if(!path) throw new InvalidInputError();
+
     const filePath = join(getDir(), path);
 
     if (existsSync(filePath)) throw new OperationError();
 
-    writeFile(filePath, 'hello', (err) => {
+    const wr = createWriteStream(filePath);
+    wr.on('error', (err) => {
       if (err) throw new OperationError();
-      console.log("File was successfully created");
+    });
+
+    wr.on('finish', () => {
+      console.log('File was written!');
     });
   } catch (error) {
     console.error(error.message);

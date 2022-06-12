@@ -1,4 +1,4 @@
-import {createReadStream, existsSync, rename} from "fs";
+import {createReadStream, existsSync, rename as renameFile} from "fs";
 import { join } from "path";
 import { getDir } from "../directoryPaths.js";
 import { InvalidInputError, OperationError } from "../errors.js";
@@ -17,7 +17,7 @@ export const rename = async (path, dest) => {
 
     const rs = createReadStream(input);
     rs.on('data', (chunk) => {
-      rename(input, output, (err) => {
+      renameFile(input, output, (err) => {
         if (err) throw new OperationError();
         console.log("File was successfully renamed");
       });
